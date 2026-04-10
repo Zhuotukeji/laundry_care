@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { getAllFaqItems } from "@/content/faqs";
 import SearchBox from "@/components/search-box";
+import FaqList from "@/components/faq-list";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
@@ -7,6 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function FaqPage() {
+  const items = getAllFaqItems();
+  const categories = [...new Set(items.map((i) => i.category))];
+
   return (
     <main className="flex-1">
       <section className="bg-gradient-to-b from-blue-50 to-[var(--color-bg)] py-12">
@@ -25,9 +30,12 @@ export default function FaqPage() {
       </section>
 
       <section className="max-w-4xl mx-auto px-4 py-12">
-        <p className="text-center text-[var(--color-text-muted)]">
-          FAQ content is being loaded...
-        </p>
+        {categories.map((cat) => (
+          <div key={cat} className="mb-10">
+            <h2 className="text-xl font-bold mb-4">{cat}</h2>
+            <FaqList items={items.filter((i) => i.category === cat)} />
+          </div>
+        ))}
       </section>
     </main>
   );

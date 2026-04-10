@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { getAllFabricGuides } from "@/content/fabrics";
+import GuideCard from "@/components/guide-card";
 import SearchBox from "@/components/search-box";
 
 export const metadata: Metadata = {
@@ -8,6 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default function FabricsPage() {
+  const guides = getAllFabricGuides();
+
   return (
     <main className="flex-1">
       <section className="bg-gradient-to-b from-blue-50 to-[var(--color-bg)] py-12">
@@ -27,9 +31,17 @@ export default function FabricsPage() {
       </section>
 
       <section className="max-w-6xl mx-auto px-4 py-12">
-        <p className="text-center text-[var(--color-text-muted)]">
-          Fabric care guides are being loaded...
-        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {guides.map((guide) => (
+            <GuideCard
+              key={guide.slug}
+              href={`/fabrics/${guide.slug}`}
+              title={guide.title}
+              description={guide.description}
+              tag="Fabric"
+            />
+          ))}
+        </div>
       </section>
     </main>
   );
