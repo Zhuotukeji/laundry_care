@@ -9,8 +9,9 @@ export function generateStaticParams() {
   return getStainSlugs().map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const guide = getStainGuide(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const guide = getStainGuide(slug);
   if (!guide) return {};
   return {
     title: guide.title,
@@ -19,8 +20,9 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function StainGuidePage({ params }: { params: { slug: string } }) {
-  const guide = getStainGuide(params.slug);
+export default async function StainGuidePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const guide = getStainGuide(slug);
   if (!guide) notFound();
 
   const allGuides = getAllStainGuides();

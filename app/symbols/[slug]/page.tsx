@@ -9,8 +9,9 @@ export function generateStaticParams() {
   return getSymbolSlugs().map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const guide = getSymbolGuide(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const guide = getSymbolGuide(slug);
   if (!guide) return {};
   return {
     title: guide.title,
@@ -19,8 +20,9 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function SymbolGuidePage({ params }: { params: { slug: string } }) {
-  const guide = getSymbolGuide(params.slug);
+export default async function SymbolGuidePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const guide = getSymbolGuide(slug);
   if (!guide) notFound();
 
   const allGuides = getAllSymbolGuides();
