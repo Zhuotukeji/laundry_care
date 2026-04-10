@@ -3,7 +3,7 @@ import { getStainSlugs } from "@/content/stains";
 import { getSymbolSlugs } from "@/content/symbols";
 import { getFabricSlugs } from "@/content/fabrics";
 
-const BASE_URL = "https://laundrycareguide.com";
+const BASE_URL = "https://www.lxzux.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [

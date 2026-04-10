@@ -4,6 +4,7 @@ import SiteFooter from "@/components/site-footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.lxzux.com"),
   title: {
     default: "Laundry Care Guide — Stain Removal, Symbols & Fabric Care",
     template: "%s | Laundry Care Guide",
